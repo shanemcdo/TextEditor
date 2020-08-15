@@ -48,6 +48,10 @@ void TextEditor::keyboard_input(){
                     break;
             }
             break;
+        case 23: // ctrl w
+            system("cls");
+            show_help();
+            break;
         case 19: // ctrl s
             save_file(get_file_name());
             break;
@@ -84,7 +88,7 @@ std::string TextEditor::get_file_name(){
 }
 
 void TextEditor::show_help(){
-    std::cout << "Ctrl+h - Help menu" << std::endl;
+    std::cout << "Ctrl+w - Help menu" << std::endl;
     std::cout << "Ctrl+s - Save file" << std::endl;
     std::cout << "Ctrl+q - quit" << std::endl;
     system("pause");
@@ -101,6 +105,7 @@ TextEditor::TextEditor(){
 void TextEditor::run(){
     system("cls");
     show_help();
+    system("cls");
     while(running){
         if(kbhit()){
             keyboard_input();

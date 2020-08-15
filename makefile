@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -c -Wall
 INCLUDE = -Iinclude
-LIBS = 
+LIBS =
 
 all: main TextEditor
 	$(CC) bin/*.o -o bin/test.exe $(INCLUDE) $(LIBS)
