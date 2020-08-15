@@ -15,6 +15,8 @@ private:
     void save_file(std::string file_name);
     std::string get_file_name();
     void show_help();
+    void move_up();
+    void move_down();
 public:
     TextEditor();
     void run();

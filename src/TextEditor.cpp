@@ -33,8 +33,10 @@ void TextEditor::keyboard_input(){
         case 224:
             switch(getch()){
                 case 72: //up
+                    move_up();
                     break;
                 case 80: //down
+                    move_down();
                     break;
                 case 75: //left
                     index -= 1;
@@ -92,6 +94,52 @@ void TextEditor::show_help(){
     std::cout << "Ctrl+s - Save file" << std::endl;
     std::cout << "Ctrl+q - quit" << std::endl;
     system("pause");
+}
+
+void TextEditor::move_up(){
+    int newlines_reached = 0;
+    int distance_away = 0;
+    int distance_between = 0;
+    int i;
+    for(i = index; i > 0; i--){
+        if(text[i] == '\n')
+            newlines_reached += 1;
+        if(newlines_reached == 0)
+            distance_away++;
+        else if(newlines_reached == 1)
+            distance_between++;
+        else
+            break;
+    }
+    index = i + std::min(distance_away, distance_between);
+}
+
+void TextEditor::move_down(){
+    int newlines_reached = 0;
+    int distance_away = 0;
+    int distance_between = 0;
+    int i;
+    for(i = index; i > 0; i--){
+        if(text[i] == '\n')
+            newlines_reached += 1;
+        if(newlines_reached == 0)
+            distance_away++;
+        else
+            break;
+    }
+    if(distance_away == 0)
+        distance_away = 1;
+    newlines_reached = 0;
+    for(i = index; i < text.size(); i++){
+        if(text[i] == '\n')
+            newlines_reached += 1;
+        if(newlines_reached == 0){
+        }else if(newlines_reached == 1)
+            distance_between++;
+        else
+            break;
+    }
+    index = i - distance_between + std::min(distance_away, distance_between);
 }
 
 // public
