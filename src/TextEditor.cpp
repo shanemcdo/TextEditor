@@ -26,7 +26,7 @@ COORD TextEditor::get_xy(){
 void TextEditor::keyboard_input(){
     int key = getch();
     switch(key){
-        case 27:
+        case 17:
             running = false;
             break;
         case 0:
@@ -83,6 +83,13 @@ std::string TextEditor::get_file_name(){
     return file_name;
 }
 
+void TextEditor::show_help(){
+    std::cout << "Ctrl+h - Help menu" << std::endl;
+    std::cout << "Ctrl+s - Save file" << std::endl;
+    std::cout << "Ctrl+q - quit" << std::endl;
+    system("pause");
+}
+
 // public
 
 TextEditor::TextEditor(){
@@ -93,6 +100,7 @@ TextEditor::TextEditor(){
 
 void TextEditor::run(){
     system("cls");
+    show_help();
     while(running){
         if(kbhit()){
             keyboard_input();

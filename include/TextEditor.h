@@ -14,6 +14,7 @@ private:
     void keyboard_input();
     void save_file(std::string file_name);
     std::string get_file_name();
+    void show_help();
 public:
     TextEditor();
     void run();
