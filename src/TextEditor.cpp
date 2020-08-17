@@ -101,6 +101,7 @@ void TextEditor::move_up(){
     int distance_away = 0;
     int distance_between = 0;
     int i;
+    bool at_beginning = true;
     for(i = index; i > 0; i--){
         if(text[i] == '\n')
             newlines_reached += 1;
@@ -108,9 +109,12 @@ void TextEditor::move_up(){
             distance_away++;
         else if(newlines_reached == 1)
             distance_between++;
-        else
+        else{
+            distance_away++;
             break;
+        }
     }
+    distance_away--;
     index = i + std::min(distance_away, distance_between);
 }
 
@@ -124,10 +128,13 @@ void TextEditor::move_down(){
             newlines_reached += 1;
         if(newlines_reached == 0)
             distance_away++;
-        else
+        else{
+            distance_away--;
             break;
+        }
     }
-    if(distance_away == 0)
+    distance_away++;
+    if(distance_away <= 0)
         distance_away = 1;
     newlines_reached = 0;
     for(i = index; i < text.size(); i++){
