@@ -1,6 +1,7 @@
 #include<iostream>
 #include<conio.h>
 #include<fstream>
+#include<sstream>
 #include"TextEditor.h"
 
 // private
@@ -34,9 +35,13 @@ void TextEditor::keyboard_input(){
             switch(getch()){
                 case 72: //up
                     move_up();
+                    if(index < 0)
+                        index = 0;
                     break;
                 case 80: //down
                     move_down();
+                    if(index >= text.size())
+                        index = text.size();
                     break;
                 case 75: //left
                     index -= 1;
@@ -56,6 +61,9 @@ void TextEditor::keyboard_input(){
             break;
         case 19: // ctrl s
             save_file(get_file_name());
+            break;
+        case 12: // ctrl l
+            load_file(get_file_name());
             break;
         case '\b':
             if(text != ""){
@@ -81,6 +89,16 @@ void TextEditor::save_file(std::string file_name){
     f.close();
 }
 
+void TextEditor::load_file(std::string file_name){
+    std::ostringstream strm;
+    std::ifstream f(file_name);
+    strm << f.rdbuf();
+    f.close();
+    text = "";
+    text = strm.str();
+    index = 0;
+}
+
 std::string TextEditor::get_file_name(){
     std::string file_name;
     system("cls");
@@ -92,6 +110,7 @@ std::string TextEditor::get_file_name(){
 void TextEditor::show_help(){
     std::cout << "Ctrl+w - Help menu" << std::endl;
     std::cout << "Ctrl+s - Save file" << std::endl;
+    std::cout << "Ctrl+l - load file" << std::endl;
     std::cout << "Ctrl+q - quit" << std::endl;
     system("pause");
 }

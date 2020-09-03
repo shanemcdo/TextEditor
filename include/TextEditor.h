@@ -13,6 +13,7 @@ private:
     COORD get_xy();
     void keyboard_input();
     void save_file(std::string file_name);
+    void load_file(std::string file_name);
     std::string get_file_name();
     void show_help();
     void move_up();
