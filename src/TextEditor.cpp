@@ -74,6 +74,8 @@ void TextEditor::keyboard_input(){
             break;
         case '\r': // enter key
             key = '\n';
+        case 27: // esc
+            break;
         default: // add key pressed to text
             text.insert(index, std::string(1, key));
             index += 1;
