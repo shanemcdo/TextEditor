@@ -6,22 +6,21 @@
 
 // private
 
-void TextEditor::gotoxy(COORD coord){
+void TextEditor::gotoxy(COORD coord){ // send cursor to positon on the screen
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-COORD TextEditor::get_xy(){
-    int x = 0;
-    int y = 0;
+COORD TextEditor::get_xy(){ // get position cursor should be at based on index
+    COORD p{0, 0};
     for(int i = 0; i < index; i++){
         if(text[i] == '\n'){
-            x = 0;
-            y += 1;
+            p.X = 0;
+            p.Y += 1;
         }else{
-            x += 1;
+            p.X += 1;
         }
     }
-    return COORD{x, y};
+    return p;
 }
 
 void TextEditor::keyboard_input(){
