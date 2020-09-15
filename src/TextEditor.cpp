@@ -27,11 +27,11 @@ COORD TextEditor::get_xy(){
 void TextEditor::keyboard_input(){
     int key = getch();
     switch(key){
-        case 17:
+        case 17: // ctrl q
             running = false;
             break;
-        case 0:
-        case 224:
+        case 0: // special key
+        case 224: // special key
             switch(getch()){
                 case 72: //up
                     move_up();
@@ -65,7 +65,7 @@ void TextEditor::keyboard_input(){
         case 12: // ctrl l
             load_file(get_file_name());
             break;
-        case '\b':
+        case '\b': // backspace
             if(text != ""){
                 text.erase(index - 1, 1);
                 index -= 1;
@@ -73,9 +73,9 @@ void TextEditor::keyboard_input(){
                     index = 0;
             }
             break;
-        case '\r':
+        case '\r': // enter key
             key = '\n';
-        default:
+        default: // add key pressed to text
             text.insert(index, std::string(1, key));
             index += 1;
             if(index >= text.size())
