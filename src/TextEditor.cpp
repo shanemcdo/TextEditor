@@ -190,3 +190,4 @@ void TextEditor::run(){
         }
     }
 }
+

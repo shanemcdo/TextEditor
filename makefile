@@ -3,7 +3,7 @@ CFLAGS = -c -Wall
 INCLUDE = -Iinclude
 LIBS =
 
-all: main TextEditor
+all: main TextEditor Node
 	$(CC) bin/*.o -o bin/test.exe $(INCLUDE) $(LIBS)
 	@echo
 
