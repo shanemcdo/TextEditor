@@ -77,6 +77,13 @@ void TextEditor::keyboard_input(){
         case 27: // esc
             break;
         default: // add key pressed to text
+            if(head == nullptr){
+                curr = new Node(key);
+                head = curr;
+            }else{
+                curr->insert(new Node(key));
+                curr = curr->get_next();
+            }
             text.insert(index, std::string(1, key));
             index += 1;
             if(index >= text.size())
@@ -173,6 +180,8 @@ void TextEditor::move_down(){
 
 TextEditor::TextEditor(){
     text = "";
+    head = nullptr;
+    curr = nullptr;
     running = true;
     index = 0;
 }

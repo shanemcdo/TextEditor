@@ -15,6 +15,8 @@ public:
     char get_val();
     Node* get_next();
     Node* get_prev();
+    void insert();
+    void insert(Node* new_node);
 };
 
 #endif /* NODE_H */

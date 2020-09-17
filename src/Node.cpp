@@ -37,3 +37,12 @@ Node* Node::get_next(){
 Node* Node::get_prev(){
     return prev;
 }
+
+void Node::insert(Node* new_node){
+    if(next != nullptr){
+        new_node->set_next(next);
+        next->set_prev(new_node);
+    }
+    next = new_node;
+    new_node->set_prev(this);
+}

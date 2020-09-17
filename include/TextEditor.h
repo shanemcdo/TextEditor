@@ -3,10 +3,13 @@
 
 #include<windows.h>
 #include<string>
+#include"Node.h"
 
 class TextEditor{
 private:
     std::string text;
+    Node* head;
+    Node* curr;
     bool running;
     int index;
     void gotoxy(COORD coord);
