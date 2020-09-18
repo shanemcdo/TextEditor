@@ -63,6 +63,8 @@ void TextEditor::keyboard_input(){
                     // if(index >= text.size())
                     //     index = text.size();
                     break;
+                default:
+                    return;
             }
             break;
         case 23: // ctrl w
