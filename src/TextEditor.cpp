@@ -35,28 +35,28 @@ void TextEditor::keyboard_input(){
         case 224: // special key
             switch(getch()){
                 case 72: //up
-                    move_up();
-                    if(index < 0)
-                        index = 0;
+                    // move_up();
+                    // if(index < 0)
+                    //     index = 0;
                     break;
                 case 80: //down
-                    move_down();
-                    if(index >= text.size())
-                        index = text.size();
+                    // move_down();
+                    // if(index >= text.size())
+                    //     index = text.size();
                     break;
                 case 75: //left
                     if(curr->get_prev() != nullptr)
                         curr = curr->get_prev();
-                    index -= 1;
-                    if(index < 0)
-                        index = 0;
+                    // index -= 1;
+                    // if(index < 0)
+                    //     index = 0;
                     break;
                 case 77: //right
                     if(curr->get_next() != nullptr)
                         curr = curr->get_next();
-                    index += 1;
-                    if(index >= text.size())
-                        index = text.size();
+                    // index += 1;
+                    // if(index >= text.size())
+                    //     index = text.size();
                     break;
             }
             break;
@@ -75,16 +75,18 @@ void TextEditor::keyboard_input(){
                 if(curr != nullptr){
                     Node* node_to_delete = curr;
                     curr = curr->get_prev();
+                    if(curr == nullptr){
+                        curr = node_to_delete->get_next();
+                        head = curr;
+                    }
                     node_to_delete->remove();
                 }
-                if(curr == nullptr)
-                    head = nullptr;
-                if(text != ""){
-                    text.erase(index - 1, 1);
-                    index -= 1;
-                    if(index < 0)
-                        index = 0;
-                }
+                // if(text != ""){
+                //     text.erase(index - 1, 1);
+                //     index -= 1;
+                //     if(index < 0)
+                //         index = 0;
+                // }
             }
             break;
         case '\r': // enter key
@@ -97,10 +99,6 @@ void TextEditor::keyboard_input(){
                 curr->insert(new Node(key));
                 curr = curr->get_next();
             }
-            text.insert(index, std::string(1, key));
-            index += 1;
-            if(index >= text.size())
-                index = text.size();
     }
 }
 
