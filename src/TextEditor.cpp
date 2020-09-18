@@ -11,18 +11,21 @@ void TextEditor::gotoxy(COORD coord){ // send cursor to positon on the screen
 
 COORD TextEditor::get_xy(){ // get position cursor should be at based on curr
     COORD p{-1, 0}; // create COORD p
-    Node* curr_next = curr->get_next();
-    for(Node* n = head; curr != nullptr && n != curr_next; n = n->get_next()){ // loop through list and stop at curr's next
-        if(n->get_val() == '\n'){ // if newline
-            p.X = -1; // reset x to zero
-            p.Y++; // increment y
-        }else{
-            p.X++; // increment x
+    if(curr != nullptr){
+        Node* curr_next = curr->get_next();
+        for(Node* n = head; n != curr_next; n = n->get_next()){ // loop through list and stop at curr's next
+            if(n->get_val() == '\n'){ // if newline
+                p.X = -1; // reset x to zero
+                p.Y++; // increment y
+            }else{
+                p.X++; // increment x
+            }
         }
+        if(!insert_at_begining) // if not inserting at the beginning shift 1 to the right visually
+            p.X++; // increment x
     }
-    if(!insert_at_begining) // if not inserting at the beginning shift 1 to the right visually
-        p.X++; // increment x
     return p;
+
 }
 
 void TextEditor::keyboard_input(){
@@ -65,7 +68,7 @@ void TextEditor::keyboard_input(){
                     //     index = text.size();
                     break;
                 default: // default case
-                    return; //exit
+                    break;
             }
             break;
         case 23: // ctrl w
