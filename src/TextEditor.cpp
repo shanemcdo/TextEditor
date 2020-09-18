@@ -128,6 +128,7 @@ void TextEditor::load_file(std::string file_name){
         }
     }
     index = 0;
+    curr = head;
 }
 
 std::string TextEditor::get_file_name(){
