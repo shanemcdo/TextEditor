@@ -10,16 +10,18 @@ void TextEditor::gotoxy(COORD coord){ // send cursor to positon on the screen
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-COORD TextEditor::get_xy(){ // get position cursor should be at based on index
+COORD TextEditor::get_xy(){ // get position cursor should be at based on curr
     COORD p{0, 0};
-    for(int i = 0; i < index; i++){
-        if(text[i] == '\n'){
+    for(Node* n = head; n != curr; n = n->get_next()){
+        if(n->get_val() == '\n'){
             p.X = 0;
             p.Y += 1;
         }else{
             p.X += 1;
         }
     }
+    if(!insert_at_begining)
+        p.X += 1;
     return p;
 }
 
