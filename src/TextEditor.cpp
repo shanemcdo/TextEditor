@@ -10,27 +10,27 @@ void TextEditor::gotoxy(COORD coord){ // send cursor to positon on the screen
 }
 
 COORD TextEditor::get_xy(){ // get position cursor should be at based on curr
-    COORD p{0, 0};
+    COORD p{0, 0}; // create COORD p
     for(Node* n = head; n != nullptr && n != curr; n = n->get_next()){
-        if(n->get_val() == '\n'){
-            p.X = 0;
-            p.Y += 1;
+        if(n->get_val() == '\n'){ // if newline
+            p.X = 0; // reset x to zero
+            p.Y++; // increment y
         }else{
-            p.X += 1;
+            p.X++; // increment x
         }
     }
-    if(!insert_at_begining)
-        p.X += 1;
+    if(!insert_at_begining) // if not inserting at the beginning shift 1 to the right visually
+        p.X++; // increment x
     return p;
 }
 
 void TextEditor::keyboard_input(){
-    int key = getch();
+    int key = getch(); // get key
     switch(key){
         case 27: // esc
             break;
         case 17: // ctrl q
-            running = false;
+            running = false; // stop the main loop
             break;
         case 0: // special key
         case 224: // special key
@@ -46,49 +46,49 @@ void TextEditor::keyboard_input(){
                     //     index = text.size();
                     break;
                 case 75: //left
-                    if(curr == head)
-                        insert_at_begining = true;
-                    else if(curr->get_prev() != nullptr)
-                        curr = curr->get_prev();
+                    if(curr == head) // if at beginning
+                        insert_at_begining = true; // insert at beginning is true
+                    else if(curr->get_prev() != nullptr) // if there is a previous
+                        curr = curr->get_prev(); // set current to previous
                     // index -= 1;
                     // if(index < 0)
                     //     index = 0;
                     break;
                 case 77: //right
-                    if(insert_at_begining)
-                        insert_at_begining = false;
-                    else if(curr->get_next() != nullptr)
-                        curr = curr->get_next();
+                    if(insert_at_begining) // if insert at beginning
+                        insert_at_begining = false; // insert at beginning is false
+                    else if(curr->get_next() != nullptr) // if there is a next
+                        curr = curr->get_next(); // set current to next
                     // index += 1;
                     // if(index >= text.size())
                     //     index = text.size();
                     break;
-                default:
-                    return;
+                default: // default case
+                    return; //exit
             }
             break;
         case 23: // ctrl w
-            system("cls");
-            show_help();
+            system("cls"); // clear screen
+            show_help(); // display help menu
             break;
         case 19: // ctrl s
-            save_file(get_file_name());
+            save_file(get_file_name()); // save file after asking for input
             break;
         case 12: // ctrl l
-            load_file(get_file_name());
+            load_file(get_file_name()); // load file after asking for input
             break;
         case '\b': // backspace
-            {
-                if(curr != nullptr){
-                    Node* node_to_delete = curr;
-                    curr = curr->get_prev();
-                    if(curr == nullptr){
-                        curr = node_to_delete->get_next();
-                        head = curr;
-                        if(curr == nullptr)
-                            insert_at_begining = true;
+            { // this brace is done to create variable node_to_delete
+                if(curr != nullptr){ // if current is empty
+                    Node* node_to_delete = curr; // copy address of current node
+                    curr = curr->get_prev(); // set current node to previous
+                    if(curr == nullptr){ // if the now current node is nullptr
+                        curr = node_to_delete->get_next(); // set current node to the last current nodes next
+                        head = curr; // set head to current
+                        if(curr == nullptr) // if its still nullptr then the screen is empty
+                            insert_at_begining = true; // insert at beginning set to true
                     }
-                    node_to_delete->remove();
+                    node_to_delete->remove(); // delete the node that was current
                 }
                 // if(text != ""){
                 //     text.erase(index - 1, 1);
@@ -99,22 +99,22 @@ void TextEditor::keyboard_input(){
             }
             break;
         case '\r': // enter key
-            key = '\n';
+            key = '\n'; // set key to newline character
         default: // add key pressed to text
-            if(head == nullptr){
-                curr = new Node(key);
-                head = curr;
-            }else{
-                if(insert_at_begining){
-                    head = new Node(key);
-                    curr->insert_before(head);
-                    curr = head;
-                }else{
-                    curr->insert(new Node(key));
-                    curr = curr->get_next();
+            if(head == nullptr){ // if screen empty
+                curr = new Node(key); // create current node
+                head = curr; // set head equal to current node
+            }else{ // if screen not empty
+                if(insert_at_begining){ // if inserting at beginning (curr has to equal head here)
+                    head = new Node(key); // create new head
+                    curr->insert_before(head); // insert new head before current head
+                    curr = head; // set current node to the same spot as head
+                }else{ // not inserting at beginning
+                    curr->insert(new Node(key)); // insert after current node
+                    curr = curr->get_next(); // move current node to node just created
                 }
             }
-            insert_at_begining = false;
+            insert_at_begining = false; // insert at beginning turns false after every new character
     }
 }
 
