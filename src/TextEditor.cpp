@@ -65,11 +65,20 @@ void TextEditor::keyboard_input(){
             load_file(get_file_name());
             break;
         case '\b': // backspace
-            if(text != ""){
-                text.erase(index - 1, 1);
-                index -= 1;
-                if(index < 0)
-                    index = 0;
+            {
+                if(curr != nullptr){
+                    Node* node_to_delete = curr;
+                    curr = curr->get_prev();
+                    node_to_delete->remove();
+                }
+                if(curr == nullptr)
+                    head = nullptr;
+                if(text != ""){
+                    text.erase(index - 1, 1);
+                    index -= 1;
+                    if(index < 0)
+                        index = 0;
+                }
             }
             break;
         case '\r': // enter key

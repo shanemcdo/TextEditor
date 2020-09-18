@@ -46,3 +46,11 @@ void Node::insert(Node* new_node){
     next = new_node;
     new_node->set_prev(this);
 }
+
+void Node::remove(){
+    if(prev != nullptr)
+        prev->set_next(next);
+    if(next != nullptr)
+        next->set_prev(prev);
+    delete this;
+}
