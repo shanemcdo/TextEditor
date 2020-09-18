@@ -118,47 +118,48 @@ void TextEditor::keyboard_input(){
     }
 }
 
-void TextEditor::save_file(std::string file_name){
-    std::ofstream f(file_name);
-    for(Node* n = head; n != nullptr; n = n->get_next())
-        f << n->get_val();
-    f.close();
+void TextEditor::save_file(std::string file_name){ // saves text to file
+    std::ofstream f(file_name); // open file
+    for(Node* n = head; n != nullptr; n = n->get_next()) // loop through linked list starting with head
+        f << n->get_val(); // write current character to file
+    f.close(); // close file
 }
 
-void TextEditor::load_file(std::string file_name){
-    delete_list();
+void TextEditor::load_file(std::string file_name){ // loads text from a file
+    delete_list(); // delete current saved list
     char ch;
     Node* tail;
-    std::ifstream f(file_name);
-    while(f.get(ch)){
-        if(head == nullptr){
-            head = new Node(ch);
-            curr = head;
-            tail = head;
-        }else{
-            curr = new Node(ch);
-            tail->insert(curr);
-            tail = curr;
+    std::ifstream f(file_name); // open file
+    while(f.get(ch)){ // loop through file and read character one at a time
+        if(head == nullptr){ // if head is nullptr
+            head = new Node(ch); // create head
+            curr = head; // set current to head
+            tail = head; // set tail to head
+        }else{ // head exists
+            curr = new Node(ch); // create new node
+            tail->insert(curr); // set the next of tail to be the new node
+            tail = curr; // set new node to be new tail
         }
     }
-    curr = head;
-    insert_at_begining = true;
+    curr = head; // set cursor at beginning
+    insert_at_begining = true; // set cursor before first character
+    f.close(); // close file
 }
 
-std::string TextEditor::get_file_name(){
+std::string TextEditor::get_file_name(){ // get user input and return a string
     std::string file_name;
-    system("cls");
-    std::cout << "Enter file name to save to: ";
-    std::cin >> file_name;
+    system("cls"); // clear screen
+    std::cout << "Enter file name to save to: "; // output text
+    std::cin >> file_name; // get input
     return file_name;
 }
 
-void TextEditor::show_help(){
+void TextEditor::show_help(){ // show help menu
     std::cout << "Ctrl+w - Help menu" << std::endl;
     std::cout << "Ctrl+s - Save file" << std::endl;
     std::cout << "Ctrl+l - load file" << std::endl;
     std::cout << "Ctrl+q - quit" << std::endl;
-    system("pause");
+    system("pause"); // pause screen
 }
 
 void TextEditor::move_up(){
@@ -214,23 +215,23 @@ void TextEditor::move_down(){
     index = i - distance_between + std::min(distance_away, distance_between);
 }
 
-void TextEditor::print_text(){
-    for(Node* n = head; n != nullptr; n = n->get_next())
-        std::cout << n->get_val();
+void TextEditor::print_text(){ // prints the contents of the linked list
+    for(Node* n = head; n != nullptr; n = n->get_next()) // loop through entire list starting with head
+        std::cout << n->get_val(); // print current character in list
 }
 
-void TextEditor::delete_list(){
-    while(head != nullptr){
-        Node* node_to_delete = head;
-        head = head->get_next();
-        delete node_to_delete;
-    }
-    curr = nullptr;
+void TextEditor::delete_list(){ // deletes the linked list
+    while(head != nullptr){ // loop while head isn't nullptr
+        Node* node_to_delete = head; // save current node memory adress to delete
+        head = head->get_next(); // track head to next node
+        delete node_to_delete; // delete saved node
+    } // by the end head is nullptr because that is the exit condition
+    curr = nullptr; // set curr also equal to nullptr
 }
 
 // public
 
-TextEditor::TextEditor(){
+TextEditor::TextEditor(){ // constructor
     text = "";
     head = nullptr;
     curr = nullptr;
@@ -239,27 +240,27 @@ TextEditor::TextEditor(){
     index = 0;
 }
 
-TextEditor::~TextEditor(){
-    delete_list();
+TextEditor::~TextEditor(){ // deconstructor
+    delete_list(); // destroy list
 }
 
 void TextEditor::run(){
-    system("cls");
-    show_help();
-    system("cls");
-    while(running){
-        if(kbhit()){
-            keyboard_input();
-            system("cls");
+    system("cls"); // clear screen
+    show_help(); // show help menu
+    system("cls"); // clear screen
+    while(running){ // main loop
+        if(kbhit()){ // if a key has been touched
+            keyboard_input(); // get keyboard input and act on it
+            system("cls"); // clear screen
             // std::cout << text;
-            print_text();
+            print_text(); // print screen
             // Node* tail = head;
             // while(tail != nullptr && tail->get_next() != nullptr)
             //     tail = tail->get_next();
             // std::cout << std::endl;
             // for(;tail != nullptr; tail = tail->get_prev())
             //     std::cout << tail->get_val();
-            gotoxy(get_xy());
+            gotoxy(get_xy()); // move cursor to curr
         }
     }
     // Node* n = new Node('1');
