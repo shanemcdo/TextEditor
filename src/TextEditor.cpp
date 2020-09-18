@@ -11,7 +11,7 @@ void TextEditor::gotoxy(COORD coord){ // send cursor to positon on the screen
 
 COORD TextEditor::get_xy(){ // get position cursor should be at based on curr
     COORD p{0, 0};
-    for(Node* n = head; n != curr; n = n->get_next()){
+    for(Node* n = head; n != nullptr && n != curr; n = n->get_next()){
         if(n->get_val() == '\n'){
             p.X = 0;
             p.Y += 1;
@@ -85,6 +85,8 @@ void TextEditor::keyboard_input(){
                     if(curr == nullptr){
                         curr = node_to_delete->get_next();
                         head = curr;
+                        if(curr == nullptr)
+                            insert_at_begining = true;
                     }
                     node_to_delete->remove();
                 }
@@ -233,7 +235,7 @@ TextEditor::TextEditor(){
     head = nullptr;
     curr = nullptr;
     running = true;
-    insert_at_begining = false;
+    insert_at_begining = true;
     index = 0;
 }
 
