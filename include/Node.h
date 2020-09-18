@@ -16,6 +16,7 @@ public:
     Node* get_next();
     Node* get_prev();
     void insert(Node* new_node);
+    void insert_before(Node* new_node);
     void remove();
 };
 

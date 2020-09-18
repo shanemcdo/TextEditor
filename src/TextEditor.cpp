@@ -45,14 +45,18 @@ void TextEditor::keyboard_input(){
                     //     index = text.size();
                     break;
                 case 75: //left
-                    if(curr->get_prev() != nullptr)
+                    if(curr == head)
+                        insert_at_begining = true;
+                    else if(curr->get_prev() != nullptr)
                         curr = curr->get_prev();
                     // index -= 1;
                     // if(index < 0)
                     //     index = 0;
                     break;
                 case 77: //right
-                    if(curr->get_next() != nullptr)
+                    if(insert_at_begining)
+                        insert_at_begining = false;
+                    else if(curr->get_next() != nullptr)
                         curr = curr->get_next();
                     // index += 1;
                     // if(index >= text.size())
@@ -96,8 +100,15 @@ void TextEditor::keyboard_input(){
                 curr = new Node(key);
                 head = curr;
             }else{
-                curr->insert(new Node(key));
-                curr = curr->get_next();
+                if(insert_at_begining){
+                    head = new Node(key);
+                    curr->insert_before(head);
+                    curr = head;
+                }else{
+                    curr->insert(new Node(key));
+                    curr = curr->get_next();
+                }
+                insert_at_begining = false;
             }
     }
 }
@@ -219,6 +230,7 @@ TextEditor::TextEditor(){
     head = nullptr;
     curr = nullptr;
     running = true;
+    insert_at_begining = false;
     index = 0;
 }
 
@@ -237,7 +249,7 @@ void TextEditor::run(){
             // std::cout << text;
             print_text();
             // Node* tail = head;
-            // while(tail->get_next() != nullptr)
+            // while(tail != nullptr && tail->get_next() != nullptr)
             //     tail = tail->get_next();
             // std::cout << std::endl;
             // for(;tail != nullptr; tail = tail->get_prev())
@@ -245,5 +257,15 @@ void TextEditor::run(){
             gotoxy(get_xy());
         }
     }
+    // Node* n = new Node('1');
+    // n->insert_before(new Node('2'));
+    // n->get_prev()->insert_before(new Node('3'));
+    // Node* h = n->get_prev()->get_prev();
+    // while(h != nullptr){
+    //     Node* d = h;
+    //     std::cout << h->get_val();
+    //     h = h->get_next();
+    //     delete d;
+    // }
 }
 

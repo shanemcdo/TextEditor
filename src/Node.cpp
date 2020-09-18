@@ -47,6 +47,15 @@ void Node::insert(Node* new_node){
     new_node->set_prev(this);
 }
 
+void Node::insert_before(Node* new_node){
+    if(prev != nullptr){
+        new_node->set_prev(prev);
+        prev->set_next(new_node);
+    }
+    prev = new_node;
+    new_node->set_next(this);
+}
+
 void Node::remove(){
     if(prev != nullptr)
         prev->set_next(next);

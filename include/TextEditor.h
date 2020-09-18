@@ -11,6 +11,7 @@ private:
     Node* head;
     Node* curr;
     bool running;
+    bool insert_at_begining;
     int index;
     void gotoxy(COORD coord);
     COORD get_xy();
