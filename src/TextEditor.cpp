@@ -106,7 +106,8 @@ void TextEditor::keyboard_input(){
 
 void TextEditor::save_file(std::string file_name){
     std::ofstream f(file_name);
-    f << text;
+    for(Node* n = head; n != nullptr; n = n->get_next())
+        f << n->get_val();
     f.close();
 }
 
@@ -222,12 +223,12 @@ void TextEditor::run(){
             system("cls");
             // std::cout << text;
             print_text();
-            Node* tail = head;
-            while(tail->get_next() != nullptr)
-                tail = tail->get_next();
-            std::cout << std::endl;
-            for(;tail != nullptr; tail = tail->get_prev())
-                std::cout << tail->get_val();
+            // Node* tail = head;
+            // while(tail->get_next() != nullptr)
+            //     tail = tail->get_next();
+            // std::cout << std::endl;
+            // for(;tail != nullptr; tail = tail->get_prev())
+            //     std::cout << tail->get_val();
             gotoxy(get_xy());
         }
     }
