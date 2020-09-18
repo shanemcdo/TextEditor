@@ -25,7 +25,6 @@ COORD TextEditor::get_xy(){ // get position cursor should be at based on curr
             p.X++; // increment x
     }
     return p;
-
 }
 
 void TextEditor::keyboard_input(){
@@ -61,7 +60,7 @@ void TextEditor::keyboard_input(){
                 case 77: //right
                     if(insert_at_begining) // if insert at beginning
                         insert_at_begining = false; // insert at beginning is false
-                    else if(curr->get_next() != nullptr) // if there is a next
+                    else if(curr != nullptr && curr->get_next() != nullptr) // if there is a next
                         curr = curr->get_next(); // set current to next
                     // index += 1;
                     // if(index >= text.size())
