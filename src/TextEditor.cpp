@@ -176,6 +176,11 @@ void TextEditor::move_down(){
     index = i - distance_between + std::min(distance_away, distance_between);
 }
 
+void TextEditor::print_text(){
+    for(Node* n = head; n != nullptr; n = n->get_next())
+        std::cout << n->get_val();
+}
+
 // public
 
 TextEditor::TextEditor(){
@@ -203,8 +208,13 @@ void TextEditor::run(){
             keyboard_input();
             system("cls");
             // std::cout << text;
-            for(Node* n = head; n != nullptr; n = n->get_next())
-                std::cout << n->get_val();
+            print_text();
+            // Node* tail = head;
+            // while(tail->get_next() != nullptr)
+            //     tail = tail->get_next();
+            // std::cout << std::endl;
+            // for(;tail != nullptr; tail = tail->get_prev())
+            //     std::cout << tail->get_val();
             gotoxy(get_xy());
         }
     }

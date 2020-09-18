@@ -21,6 +21,7 @@ private:
     void show_help();
     void move_up();
     void move_down();
+    void print_text();
 public:
     TextEditor();
     ~TextEditor();
