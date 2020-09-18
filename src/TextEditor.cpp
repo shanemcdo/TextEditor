@@ -138,8 +138,8 @@ void TextEditor::load_file(std::string file_name){
             tail = curr;
         }
     }
-    index = 0;
     curr = head;
+    insert_at_begining = true;
 }
 
 std::string TextEditor::get_file_name(){
