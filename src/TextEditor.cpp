@@ -26,6 +26,8 @@ COORD TextEditor::get_xy(){ // get position cursor should be at based on index
 void TextEditor::keyboard_input(){
     int key = getch();
     switch(key){
+        case 27: // esc
+            break;
         case 17: // ctrl q
             running = false;
             break;
@@ -87,8 +89,6 @@ void TextEditor::keyboard_input(){
             break;
         case '\r': // enter key
             key = '\n';
-        case 27: // esc
-            break;
         default: // add key pressed to text
             if(head == nullptr){
                 curr = new Node(key);
