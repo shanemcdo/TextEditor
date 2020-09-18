@@ -111,8 +111,8 @@ void TextEditor::keyboard_input(){
                     curr->insert(new Node(key));
                     curr = curr->get_next();
                 }
-                insert_at_begining = false;
             }
+            insert_at_begining = false;
     }
 }
 
