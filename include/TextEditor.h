@@ -23,6 +23,7 @@ private:
     void move_down();
 public:
     TextEditor();
+    ~TextEditor();
     void run();
 };
 

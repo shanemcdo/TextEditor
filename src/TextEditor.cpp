@@ -186,6 +186,14 @@ TextEditor::TextEditor(){
     index = 0;
 }
 
+TextEditor::~TextEditor(){
+    while(head != nullptr){
+        Node* node_to_delete = head;
+        head = head->get_next();
+        delete node_to_delete;
+    }
+}
+
 void TextEditor::run(){
     system("cls");
     show_help();
@@ -194,7 +202,9 @@ void TextEditor::run(){
         if(kbhit()){
             keyboard_input();
             system("cls");
-            std::cout << text;
+            // std::cout << text;
+            for(Node* n = head; n != nullptr; n = n->get_next())
+                std::cout << n->get_val();
             gotoxy(get_xy());
         }
     }
