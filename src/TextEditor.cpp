@@ -1,7 +1,6 @@
 #include<iostream>
 #include<conio.h>
 #include<fstream>
-#include<sstream>
 #include"TextEditor.h"
 
 // private
