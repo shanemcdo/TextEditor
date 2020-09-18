@@ -112,12 +112,21 @@ void TextEditor::save_file(std::string file_name){
 }
 
 void TextEditor::load_file(std::string file_name){
-    std::ostringstream strm;
+    delete_list();
+    char ch;
+    Node* tail;
     std::ifstream f(file_name);
-    strm << f.rdbuf();
-    f.close();
-    text = "";
-    text = strm.str();
+    while(f.get(ch)){
+        if(head == nullptr){
+            head = new Node(ch);
+            curr = head;
+            tail = head;
+        }else{
+            curr = new Node(ch);
+            tail->insert(curr);
+            tail = curr;
+        }
+    }
     index = 0;
 }
 
@@ -195,6 +204,15 @@ void TextEditor::print_text(){
         std::cout << n->get_val();
 }
 
+void TextEditor::delete_list(){
+    while(head != nullptr){
+        Node* node_to_delete = head;
+        head = head->get_next();
+        delete node_to_delete;
+    }
+    curr = nullptr;
+}
+
 // public
 
 TextEditor::TextEditor(){
@@ -206,11 +224,7 @@ TextEditor::TextEditor(){
 }
 
 TextEditor::~TextEditor(){
-    while(head != nullptr){
-        Node* node_to_delete = head;
-        head = head->get_next();
-        delete node_to_delete;
-    }
+    delete_list();
 }
 
 void TextEditor::run(){

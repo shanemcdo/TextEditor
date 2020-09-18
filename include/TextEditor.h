@@ -22,6 +22,7 @@ private:
     void move_up();
     void move_down();
     void print_text();
+    void delete_list();
 public:
     TextEditor();
     ~TextEditor();
