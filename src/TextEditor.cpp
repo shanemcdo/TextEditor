@@ -43,11 +43,15 @@ void TextEditor::keyboard_input(){
                         index = text.size();
                     break;
                 case 75: //left
+                    if(curr->get_prev() != nullptr)
+                        curr = curr->get_prev();
                     index -= 1;
                     if(index < 0)
                         index = 0;
                     break;
                 case 77: //right
+                    if(curr->get_next() != nullptr)
+                        curr = curr->get_next();
                     index += 1;
                     if(index >= text.size())
                         index = text.size();
@@ -218,12 +222,12 @@ void TextEditor::run(){
             system("cls");
             // std::cout << text;
             print_text();
-            // Node* tail = head;
-            // while(tail->get_next() != nullptr)
-            //     tail = tail->get_next();
-            // std::cout << std::endl;
-            // for(;tail != nullptr; tail = tail->get_prev())
-            //     std::cout << tail->get_val();
+            Node* tail = head;
+            while(tail->get_next() != nullptr)
+                tail = tail->get_next();
+            std::cout << std::endl;
+            for(;tail != nullptr; tail = tail->get_prev())
+                std::cout << tail->get_val();
             gotoxy(get_xy());
         }
     }
