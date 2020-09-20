@@ -11,7 +11,9 @@ void TextEditor::gotoxy(COORD coord){ // send cursor to positon on the screen
 
 COORD TextEditor::get_xy(){ // get position cursor should be at based on curr
     COORD p{-1, 0}; // create COORD p
-    if(curr != nullptr){
+    if(curr == head && insert_at_begining) // at very beginning of file
+        p.X++; // increase p to {0, 0}
+    else if(curr != nullptr){
         Node* curr_next = curr->get_next();
         for(Node* n = head; n != curr_next; n = n->get_next()){ // loop through list and stop at curr's next
             if(n->get_val() == '\n'){ // if newline
