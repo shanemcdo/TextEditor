@@ -46,18 +46,22 @@ void TextEditor::keyboard_input(){
         case 0: // special key
         case 224: // special key
             switch(getch()){
+                case 141: // ctrl-up
                 case 72: //up
                     move_up();
                     break;
+                case 145: //ctrl-down
                 case 80: //down
                     move_down();
                     break;
+                case 115: //ctrl-left
                 case 75: //left
                     if(curr == head) // if at beginning
                         insert_at_begining = true; // insert at beginning is true
                     else if(curr->get_prev() != nullptr) // if there is a previous
                         curr = curr->get_prev(); // set current to previous
                     break;
+                case 116: // ctrl-right
                 case 77: //right
                     if(insert_at_begining) // if insert at beginning
                         insert_at_begining = false; // insert at beginning is false
@@ -77,6 +81,9 @@ void TextEditor::keyboard_input(){
             break;
         case 12: // ctrl l
             load_file(get_file_name()); // load file after asking for input
+            break;
+        case 22: // ctrl v
+            paste_clipboard();
             break;
         case '\b': // backspace
             delete_character();
@@ -230,11 +237,26 @@ void TextEditor::delete_character(){
     }
 }
 
+void TextEditor::paste_clipboard(){
+    HANDLE clip;
+    if(OpenClipboard(nullptr))
+        clip = GetClipboardData(CF_TEXT);
+    CloseClipboard();
+    // std::cout << clip;
+    // while(clip != nullptr){
+    //     insert_character(*clip);
+    //     clip++;
+    // }
+    std::cin.clear();
+}
+
 // public
 
 TextEditor::TextEditor(){ // constructor
     head = nullptr;
     curr = nullptr;
+    selection = nullptr;
+    clipboard = nullptr;
     running = false;
     insert_at_begining = true;
 }
