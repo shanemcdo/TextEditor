@@ -235,7 +235,7 @@ void TextEditor::delete_character(){
 TextEditor::TextEditor(){ // constructor
     head = nullptr;
     curr = nullptr;
-    running = true;
+    running = false;
     insert_at_begining = true;
 }
 
@@ -247,6 +247,7 @@ void TextEditor::run(){
     system("cls"); // clear screen
     show_help(); // show help menu
     system("cls"); // clear screen
+    running = true; // start running
     while(running){ // main loop
         if(kbhit()){ // if a key has been touched
             keyboard_input(); // get keyboard input and act on it
