@@ -168,16 +168,15 @@ void TextEditor::show_help(){ // show help menu
 }
 
 void TextEditor::move_up(){
-    Node* n = curr;
     int distance_away = 0;
     int line_length = 0;
     bool at_top = false;
     for(int i = 0; i < 2;){
         if(i == 0) distance_away++;
         else if(i == 1) line_length++;
-        if(n->get_val() == '\n') i++;
-        Node* prev = n->get_prev();
-        if(prev != nullptr) n = prev;
+        if(curr->get_val() == '\n') i++;
+        Node* prev = curr->get_prev();
+        if(prev != nullptr) curr = prev;
         else{
             at_top = true;
             break;
@@ -188,9 +187,8 @@ void TextEditor::move_up(){
         distance_away -= 2;
     }
     int dist = std::min(distance_away, line_length);
-    if(dist < 0 && n == head) insert_at_begining = true;
-    for(int i = 0; i < dist && n->get_next() != nullptr; i++) n = n->get_next();
-    curr = n;
+    if(dist < 0 && curr == head) insert_at_begining = true;
+    for(int i = 0; i < dist && curr->get_next() != nullptr; i++) curr = curr->get_next();
 }
 
 void TextEditor::move_down(){
