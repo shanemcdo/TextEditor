@@ -22,6 +22,8 @@ private:
     void move_down();
     void print_text();
     void delete_list();
+    void insert_character(char key);
+    void delete_character();
 public:
     TextEditor();
     ~TextEditor();

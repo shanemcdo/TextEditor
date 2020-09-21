@@ -89,20 +89,7 @@ void TextEditor::keyboard_input(){
         case '\r': // enter key
             key = '\n'; // set key to newline character
         default: // add key pressed to text
-            if(head == nullptr){ // if screen empty
-                curr = new Node(key); // create current node
-                head = curr; // set head equal to current node
-            }else{ // if screen not empty
-                if(insert_at_begining){ // if inserting at beginning (curr has to equal head here)
-                    head = new Node(key); // create new head
-                    curr->insert_before(head); // insert new head before current head
-                    curr = head; // set current node to the same spot as head
-                }else{ // not inserting at beginning
-                    curr->insert(new Node(key)); // insert after current node
-                    curr = curr->get_next(); // move current node to node just created
-                }
-            }
-            insert_at_begining = false; // insert at beginning turns false after every new character
+            insert_character(key);
     }
 }
 
@@ -214,6 +201,23 @@ void TextEditor::delete_list(){ // deletes the linked list
         delete node_to_delete; // delete saved node
     } // by the end head is nullptr because that is the exit condition
     curr = nullptr; // set curr also equal to nullptr
+}
+
+void TextEditor::insert_character(char key){
+    if(head == nullptr){ // if screen empty
+        curr = new Node(key); // create current node
+        head = curr; // set head equal to current node
+    }else{ // if screen not empty
+        if(insert_at_begining){ // if inserting at beginning (curr has to equal head here)
+            head = new Node(key); // create new head
+            curr->insert_before(head); // insert new head before current head
+            curr = head; // set current node to the same spot as head
+        }else{ // not inserting at beginning
+            curr->insert(new Node(key)); // insert after current node
+            curr = curr->get_next(); // move current node to node just created
+        }
+    }
+    insert_at_begining = false; // insert at beginning turns false after every new character
 }
 
 // public
