@@ -191,25 +191,6 @@ void TextEditor::move_up(){
     if(dist < 0 && n == head) insert_at_begining = true;
     for(int i = 0; i < dist && n->get_next() != nullptr; i++) n = n->get_next();
     curr = n;
-    // int newlines_reached = 0;
-    // int distance_away = 0;
-    // int distance_between = 0;
-    // int i;
-    // bool at_beginning = true;
-    // for(i = index; i > 0; i--){
-    //     if(text[i] == '\n')
-    //         newlines_reached += 1;
-    //     if(newlines_reached == 0)
-    //         distance_away++;
-    //     else if(newlines_reached == 1)
-    //         distance_between++;
-    //     else{
-    //         distance_away++;
-    //         break;
-    //     }
-    // }
-    // distance_away--;
-    // index = i + std::min(distance_away, distance_between);
 }
 
 void TextEditor::move_down(){
