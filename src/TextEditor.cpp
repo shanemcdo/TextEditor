@@ -41,7 +41,7 @@ void TextEditor::keyboard_input(){
         case 224: // special key
             switch(getch()){
                 case 72: //up
-                    // move_up();
+                    move_up();
                     // if(index < 0)
                     //     index = 0;
                     break;
@@ -168,25 +168,39 @@ void TextEditor::show_help(){ // show help menu
 }
 
 void TextEditor::move_up(){
-    int newlines_reached = 0;
+    Node* n = curr;
     int distance_away = 0;
-    int distance_between = 0;
-    int i;
-    bool at_beginning = true;
-    for(i = index; i > 0; i--){
-        if(text[i] == '\n')
-            newlines_reached += 1;
-        if(newlines_reached == 0)
-            distance_away++;
-        else if(newlines_reached == 1)
-            distance_between++;
-        else{
-            distance_away++;
-            break;
-        }
+    int line_length = 0;
+    for(int i = 0; i < 2;){
+        if(i == 0) distance_away++;
+        else if(i == 1) line_length++;
+        if(n->get_val() == '\n' || n == head) i++;
+        Node* prev = n->get_prev();
+        if(prev != nullptr) n = prev;
+        else break;
     }
-    distance_away--;
-    index = i + std::min(distance_away, distance_between);
+    int dist = std::min(distance_away, line_length);
+    for(int i = 0; i < dist && n->get_next() != nullptr; i++) n = n->get_next();
+    curr = n;
+    // int newlines_reached = 0;
+    // int distance_away = 0;
+    // int distance_between = 0;
+    // int i;
+    // bool at_beginning = true;
+    // for(i = index; i > 0; i--){
+    //     if(text[i] == '\n')
+    //         newlines_reached += 1;
+    //     if(newlines_reached == 0)
+    //         distance_away++;
+    //     else if(newlines_reached == 1)
+    //         distance_between++;
+    //     else{
+    //         distance_away++;
+    //         break;
+    //     }
+    // }
+    // distance_away--;
+    // index = i + std::min(distance_away, distance_between);
 }
 
 void TextEditor::move_down(){
