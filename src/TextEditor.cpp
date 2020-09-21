@@ -201,11 +201,11 @@ void TextEditor::move_down(){
         else break;
     }
     if(insert_at_begining) distance_away--;
-    while(curr->get_val() != '\n'){
+    do{
         Node* next = curr->get_next();
         if(next != nullptr) curr = next;
         else return;
-    }
+    }while(curr->get_val() != '\n');
     for(int i = 0; i < distance_away && (curr->get_val() != '\n' || i == 0) && curr->get_next() != nullptr; i++) curr = curr->get_next();
     insert_at_begining = false; // insert at beginning is false
     // int newlines_reached = 0;
