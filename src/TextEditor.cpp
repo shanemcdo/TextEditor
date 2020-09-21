@@ -217,34 +217,6 @@ void TextEditor::move_down(){
     int dist = std::min(distance_away, line_length);
     for(int i = 0; i < dist && curr->get_next() != nullptr; i++) curr = curr->get_next();
     insert_at_begining = false; // insert at beginning is false
-    // int newlines_reached = 0;
-    // int distance_away = 0;
-    // int distance_between = 0;
-    // int i;
-    // for(i = index; i > 0; i--){
-    //     if(text[i] == '\n')
-    //         newlines_reached += 1;
-    //     if(newlines_reached == 0)
-    //         distance_away++;
-    //     else{
-    //         distance_away--;
-    //         break;
-    //     }
-    // }
-    // distance_away++;
-    // if(distance_away <= 0)
-    //     distance_away = 1;
-    // newlines_reached = 0;
-    // for(i = index; i < text.size(); i++){
-    //     if(text[i] == '\n')
-    //         newlines_reached += 1;
-    //     if(newlines_reached == 0){
-    //     }else if(newlines_reached == 1)
-    //         distance_between++;
-    //     else
-    //         break;
-    // }
-    // index = i - distance_between + std::min(distance_away, distance_between);
 }
 
 void TextEditor::print_text(){ // prints the contents of the linked list
