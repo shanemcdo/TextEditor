@@ -256,26 +256,9 @@ void TextEditor::run(){
         if(kbhit()){ // if a key has been touched
             keyboard_input(); // get keyboard input and act on it
             system("cls"); // clear screen
-            // std::cout << text;
             print_text(); // print screen
-            // Node* tail = head;
-            // while(tail != nullptr && tail->get_next() != nullptr)
-            //     tail = tail->get_next();
-            // std::cout << std::endl;
-            // for(;tail != nullptr; tail = tail->get_prev())
-            //     std::cout << tail->get_val();
             gotoxy(get_xy()); // move cursor to curr
         }
     }
-    // Node* n = new Node('1');
-    // n->insert_before(new Node('2'));
-    // n->get_prev()->insert_before(new Node('3'));
-    // Node* h = n->get_prev()->get_prev();
-    // while(h != nullptr){
-    //     Node* d = h;
-    //     std::cout << h->get_val();
-    //     h = h->get_next();
-    //     delete d;
-    // }
 }
 
