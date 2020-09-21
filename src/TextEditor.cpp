@@ -219,12 +219,10 @@ void TextEditor::delete_list(){ // deletes the linked list
 // public
 
 TextEditor::TextEditor(){ // constructor
-    text = "";
     head = nullptr;
     curr = nullptr;
     running = true;
     insert_at_begining = true;
-    index = 0;
 }
 
 TextEditor::~TextEditor(){ // deconstructor

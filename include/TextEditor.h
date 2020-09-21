@@ -7,12 +7,10 @@
 
 class TextEditor{
 private:
-    std::string text;
     Node* head;
     Node* curr;
     bool running;
     bool insert_at_begining;
-    int index;
     void gotoxy(COORD coord);
     COORD get_xy();
     void keyboard_input();
