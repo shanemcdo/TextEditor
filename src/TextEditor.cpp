@@ -41,31 +41,21 @@ void TextEditor::keyboard_input(){
             switch(getch()){
                 case 72: //up
                     move_up();
-                    // if(index < 0)
-                    //     index = 0;
                     break;
                 case 80: //down
                     move_down();
-                    // if(index >= text.size())
-                    //     index = text.size();
                     break;
                 case 75: //left
                     if(curr == head) // if at beginning
                         insert_at_begining = true; // insert at beginning is true
                     else if(curr->get_prev() != nullptr) // if there is a previous
                         curr = curr->get_prev(); // set current to previous
-                    // index -= 1;
-                    // if(index < 0)
-                    //     index = 0;
                     break;
                 case 77: //right
                     if(insert_at_begining) // if insert at beginning
                         insert_at_begining = false; // insert at beginning is false
                     else if(curr != nullptr && curr->get_next() != nullptr) // if there is a next
                         curr = curr->get_next(); // set current to next
-                    // index += 1;
-                    // if(index >= text.size())
-                    //     index = text.size();
                     break;
                 default: // default case
                     break;
@@ -94,12 +84,6 @@ void TextEditor::keyboard_input(){
                     }
                     node_to_delete->remove(); // delete the node that was current
                 }
-                // if(text != ""){
-                //     text.erase(index - 1, 1);
-                //     index -= 1;
-                //     if(index < 0)
-                //         index = 0;
-                // }
             }
             break;
         case '\r': // enter key
