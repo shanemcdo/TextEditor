@@ -2,6 +2,6 @@
 #include "Node.h"
 
 int main(){
-    TextEditor t;
-    t.run();
+    TextEditor t; // create editor object
+    t.run(); // start editor
 }
