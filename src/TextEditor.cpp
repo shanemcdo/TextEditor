@@ -167,28 +167,28 @@ void TextEditor::show_help(){ // show help menu
     system("pause"); // pause screen
 }
 
-void TextEditor::move_up(){
-    int distance_away = 0;
-    int line_length = 0;
-    bool at_top = false;
-    for(int i = 0; i < 2;){
-        if(i == 0) distance_away++;
-        else if(i == 1) line_length++;
-        if(curr->get_val() == '\n') i++;
-        Node* prev = curr->get_prev();
-        if(prev != nullptr) curr = prev;
-        else{
-            at_top = true;
-            break;
+void TextEditor::move_up(){ // move up one line while maintaining x positon
+    int distance_away = 0; // number of characters away from previous new line character
+    int line_length = 0; // length of previous line
+    bool at_top = false; // if the cursor made it to the top of the screen
+    for(int i = 0; i < 2;){ // create int i at zero and stop when i is above or equal to 2
+        if(i == 0) distance_away++; // increment distance_away if i is zero
+        else if(i == 1) line_length++; // increment line_length if i is 1
+        if(curr->get_val() == '\n') i++; // increment i if the current node is a newline
+        Node* prev = curr->get_prev(); // get previous node
+        if(prev != nullptr) curr = prev; // track previous if its not nullptr
+        else{ // if prev is nullptr
+            at_top = true; // we are at the top of the file
+            break; // break the loop
         }
     }
-    if(at_top){
-        line_length--;
-        distance_away -= 2;
+    if(at_top){ // if we are at the top of the file
+        line_length--; // deincrement line_length
+        distance_away -= 2; // deincrement distance_away by 2
     }
-    int dist = std::min(distance_away, line_length);
-    if(dist < 0 && curr == head) insert_at_begining = true;
-    for(int i = 0; i < dist && curr->get_next() != nullptr; i++) curr = curr->get_next();
+    int dist = std::min(distance_away, line_length); // find the smallest between the line_length and the distance_away
+    if(dist < 0 && curr == head) insert_at_begining = true; // if dist negative and curr is at the top then put the cursor before the first char
+    for(int i = 0; i < dist && curr->get_next() != nullptr; i++) curr = curr->get_next(); // track the current node dist number of steps forward
 }
 
 void TextEditor::move_down(){
