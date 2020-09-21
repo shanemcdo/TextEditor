@@ -195,7 +195,6 @@ void TextEditor::move_up(){ // move up one line while maintaining x positon
 void TextEditor::move_down(){
     Node* n = curr;
     int distance_away = 0;
-    int line_length = 0;
     while(n->get_val() != '\n'){
         distance_away++;
         Node* prev = n->get_prev();
@@ -203,13 +202,11 @@ void TextEditor::move_down(){
         else break;
     }
     while(curr->get_val() != '\n'){
-        line_length++;
         Node* next = curr->get_next();
         if(next != nullptr) curr = next;
         else return;
     }
-    int dist = std::min(distance_away, line_length);
-    for(int i = 0; i < dist && curr->get_next() != nullptr; i++) curr = curr->get_next(); // track the current node dist number of steps forward
+    for(int i = 0; i < distance_away && (curr->get_val() != '\n' || i == 0) && curr->get_next() != nullptr; i++) curr = curr->get_next();
     // int newlines_reached = 0;
     // int distance_away = 0;
     // int distance_between = 0;
