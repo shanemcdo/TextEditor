@@ -46,7 +46,7 @@ void TextEditor::keyboard_input(){
                     //     index = 0;
                     break;
                 case 80: //down
-                    // move_down();
+                    move_down();
                     // if(index >= text.size())
                     //     index = text.size();
                     break;
@@ -192,34 +192,51 @@ void TextEditor::move_up(){ // move up one line while maintaining x positon
 }
 
 void TextEditor::move_down(){
-    int newlines_reached = 0;
+    Node* n = curr;
     int distance_away = 0;
-    int distance_between = 0;
-    int i;
-    for(i = index; i > 0; i--){
-        if(text[i] == '\n')
-            newlines_reached += 1;
-        if(newlines_reached == 0)
-            distance_away++;
-        else{
-            distance_away--;
-            break;
-        }
+    int line_length = 0;
+    while(n->get_val() != '\n'){
+        distance_away++;
+        Node* prev = n->get_prev();
+        if(prev != nullptr) n = prev;
+        else break;
     }
-    distance_away++;
-    if(distance_away <= 0)
-        distance_away = 1;
-    newlines_reached = 0;
-    for(i = index; i < text.size(); i++){
-        if(text[i] == '\n')
-            newlines_reached += 1;
-        if(newlines_reached == 0){
-        }else if(newlines_reached == 1)
-            distance_between++;
-        else
-            break;
+    while(curr->get_val() != '\n'){
+        line_length++;
+        Node* next = curr->get_next();
+        if(next != nullptr) curr = next;
+        else return;
     }
-    index = i - distance_between + std::min(distance_away, distance_between);
+    int dist = std::min(distance_away, line_length);
+    for(int i = 0; i < dist && curr->get_next() != nullptr; i++) curr = curr->get_next(); // track the current node dist number of steps forward
+    // int newlines_reached = 0;
+    // int distance_away = 0;
+    // int distance_between = 0;
+    // int i;
+    // for(i = index; i > 0; i--){
+    //     if(text[i] == '\n')
+    //         newlines_reached += 1;
+    //     if(newlines_reached == 0)
+    //         distance_away++;
+    //     else{
+    //         distance_away--;
+    //         break;
+    //     }
+    // }
+    // distance_away++;
+    // if(distance_away <= 0)
+    //     distance_away = 1;
+    // newlines_reached = 0;
+    // for(i = index; i < text.size(); i++){
+    //     if(text[i] == '\n')
+    //         newlines_reached += 1;
+    //     if(newlines_reached == 0){
+    //     }else if(newlines_reached == 1)
+    //         distance_between++;
+    //     else
+    //         break;
+    // }
+    // index = i - distance_between + std::min(distance_away, distance_between);
 }
 
 void TextEditor::print_text(){ // prints the contents of the linked list
