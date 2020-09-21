@@ -188,6 +188,7 @@ void TextEditor::move_up(){
         distance_away -= 2;
     }
     int dist = std::min(distance_away, line_length);
+    if(dist < 0 && n == head) insert_at_begining = true;
     for(int i = 0; i < dist && n->get_next() != nullptr; i++) n = n->get_next();
     curr = n;
     // int newlines_reached = 0;
