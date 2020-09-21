@@ -19,9 +19,8 @@ COORD TextEditor::get_xy(){ // get position cursor should be at based on curr
             if(n->get_val() == '\n'){ // if newline
                 p.X = -1; // reset x to zero
                 p.Y++; // increment y
-            }else{
+            }else
                 p.X++; // increment x
-            }
         }
         if(!insert_at_begining) // if not inserting at the beginning shift 1 to the right visually
             p.X++; // increment x
