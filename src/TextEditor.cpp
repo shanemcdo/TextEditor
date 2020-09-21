@@ -16,11 +16,18 @@ COORD TextEditor::get_xy(){ // get position cursor should be at based on curr
     else if(curr != nullptr){
         Node* curr_next = curr->get_next();
         for(Node* n = head; n != curr_next; n = n->get_next()){ // loop through list and stop at curr's next
-            if(n->get_val() == '\n'){ // if newline
-                p.X = -1; // reset x to zero
-                p.Y++; // increment y
-            }else
-                p.X++; // increment x
+            switch(n->get_val()){
+                case '\n': // newline character
+                    p.X = -1; // reset x to zero
+                    p.Y++; // increment y
+                    break;
+                case '\t': // tab character
+                    p.X += 8; // increase x by 8 (a tab length)
+                    break;
+                default:
+                    p.X++; // increment x
+                    break;
+            }
         }
         if(!insert_at_begining) // if not inserting at the beginning shift 1 to the right visually
             p.X++; // increment x
