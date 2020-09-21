@@ -72,24 +72,13 @@ void TextEditor::keyboard_input(){
             load_file(get_file_name()); // load file after asking for input
             break;
         case '\b': // backspace
-            { // this brace is done to create variable node_to_delete
-                if(curr != nullptr){ // if current is empty
-                    Node* node_to_delete = curr; // copy address of current node
-                    curr = curr->get_prev(); // set current node to previous
-                    if(curr == nullptr){ // if the now current node is nullptr
-                        curr = node_to_delete->get_next(); // set current node to the last current nodes next
-                        head = curr; // set head to current
-                        if(curr == nullptr) // if its still nullptr then the screen is empty
-                            insert_at_begining = true; // insert at beginning set to true
-                    }
-                    node_to_delete->remove(); // delete the node that was current
-                }
-            }
+            delete_character();
             break;
         case '\r': // enter key
             key = '\n'; // set key to newline character
         default: // add key pressed to text
             insert_character(key);
+            break;
     }
 }
 
@@ -218,6 +207,20 @@ void TextEditor::insert_character(char key){
         }
     }
     insert_at_begining = false; // insert at beginning turns false after every new character
+}
+
+void TextEditor::delete_character(){
+    if(curr != nullptr){ // if current is empty
+        Node* node_to_delete = curr; // copy address of current node
+        curr = curr->get_prev(); // set current node to previous
+        if(curr == nullptr){ // if the now current node is nullptr
+            curr = node_to_delete->get_next(); // set current node to the last current nodes next
+            head = curr; // set head to current
+            if(curr == nullptr) // if its still nullptr then the screen is empty
+                insert_at_begining = true; // insert at beginning set to true
+        }
+        node_to_delete->remove(); // delete the node that was current
+    }
 }
 
 // public
