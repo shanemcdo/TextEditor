@@ -191,31 +191,31 @@ void TextEditor::move_up(){ // move up one line while maintaining x positon
     for(int i = 0; i < dist && curr->get_next() != nullptr; i++) curr = curr->get_next(); // track the current node dist number of steps forward
 }
 
-void TextEditor::move_down(){
-    Node* n = curr;
-    int distance_away = 0;
-    int line_length = 0;
-    while(n->get_val() != '\n'){
-        distance_away++;
-        Node* prev = n->get_prev();
-        if(prev != nullptr) n = prev;
-        else break;
+void TextEditor::move_down(){ // move down one line but maintain x positon
+    Node* n = curr; // create pointer to the current node
+    int distance_away = 0; // distance from previous newline
+    int line_length = 0; // length of next line
+    while(n->get_val() != '\n'){ // loop while not on newline character
+        distance_away++; // increment distance_away
+        Node* prev = n->get_prev(); // store previous node
+        if(prev != nullptr) n = prev; // n to previous node if not nullptr
+        else break; // if it is nullptr exit loop
     }
-    if(insert_at_begining) distance_away--;
-    do{
-        Node* next = curr->get_next();
-        if(next != nullptr) curr = next;
-        else return;
-    }while(curr->get_val() != '\n');
-    n = curr->get_next();
-    while(n != nullptr && n->get_val() != '\n'){
-        line_length++;
-        Node* next = n->get_next();
-        if(next != nullptr) n = next;
-        else break;
+    if(insert_at_begining) distance_away--; // if inserting before first character deincrement distance_away
+    do{ // loop
+        Node* next = curr->get_next(); // store next node
+        if(next != nullptr) curr = next; // move to next node if it isnt nullptr
+        else return; // if node is nullptr exit function
+    }while(curr->get_val() != '\n'); // loop while not on newline
+    n = curr->get_next(); // set n to the character after current
+    while(n != nullptr && n->get_val() != '\n'){ // loop while n isnt nullptr and isnt a newline
+        line_length++; // increment line_length
+        Node* next = n->get_next(); // save next node
+        if(next != nullptr) n = next; // move to next node if it is not nullptr
+        else break; // if next is nullptr exit loop
     }
-    int dist = std::min(distance_away, line_length);
-    for(int i = 0; i < dist && curr->get_next() != nullptr; i++) curr = curr->get_next();
+    int dist = std::min(distance_away, line_length); // get the minimum of distance_away and line_length
+    for(int i = 0; i < dist && curr->get_next() != nullptr; i++) curr = curr->get_next(); // move the cursor dist number of spaces to the right
     insert_at_begining = false; // insert at beginning is false
 }
 
