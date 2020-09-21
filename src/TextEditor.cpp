@@ -46,6 +46,7 @@ void TextEditor::keyboard_input(){
                     //     index = 0;
                     break;
                 case 80: //down
+                    insert_at_begining = false; // insert at beginning is false
                     move_down();
                     // if(index >= text.size())
                     //     index = text.size();
