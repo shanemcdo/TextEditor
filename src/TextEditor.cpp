@@ -171,13 +171,21 @@ void TextEditor::move_up(){
     Node* n = curr;
     int distance_away = 0;
     int line_length = 0;
+    bool at_top = false;
     for(int i = 0; i < 2;){
         if(i == 0) distance_away++;
         else if(i == 1) line_length++;
-        if(n->get_val() == '\n' || n == head) i++;
+        if(n->get_val() == '\n') i++;
         Node* prev = n->get_prev();
         if(prev != nullptr) n = prev;
-        else break;
+        else{
+            at_top = true;
+            break;
+        }
+    }
+    if(at_top){
+        line_length--;
+        distance_away -= 2;
     }
     int dist = std::min(distance_away, line_length);
     for(int i = 0; i < dist && n->get_next() != nullptr; i++) n = n->get_next();
