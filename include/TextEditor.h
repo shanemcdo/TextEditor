@@ -31,6 +31,8 @@ private:
     void paste_clipboard();
     void delete_clipboard();
     void copy_selection();
+    void print_overlay();
+    void clear_non_overlay();
     std::pair<Node*, Node*> get_selection_start_end();
 public:
     TextEditor(); // constructor

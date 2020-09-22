@@ -36,6 +36,8 @@ COORD TextEditor::get_xy(Node* n, bool to_print = false){ // get position cursor
         if(!insert_at_begining && !to_print) // if not inserting at the beginning and not printing shift 1 to the right visually
             p.X++; // increment x
     }
+    p.X += 1;
+    p.Y += 4;
     return p;
 }
 
@@ -305,6 +307,37 @@ void TextEditor::copy_selection(){
     }
 }
 
+void TextEditor::print_overlay(){
+    int line_length = 90;
+    int number_of_lines = 30;
+    std::cout << char(201);
+    for(int i = 0; i < line_length; i++)
+        std::cout << char(205);
+    std::cout << char(187) << std::endl;
+    std::cout << char(186);
+    std::cout << "Ctrl+w - Help menu | ";
+    std::cout << "Ctrl+s - Save file | ";
+    std::cout << "Ctrl+l - load file | ";
+    std::cout << "Ctrl+p - paste clipboard   ";
+    std::cout << char(186) << std:: endl << char(186);
+    std::cout << "Ctrl+q - quit | ";
+    std::cout << "Ctrl+x - start selection / end selection and copy to clipboard            ";
+    std::cout << char(186) << std:: endl;
+    std::cout << char(204);
+    for(int i = 0; i < line_length; i++)
+        std::cout << char(205);
+    std::cout << char(185) << std::endl;
+    for(int i = 0; i < number_of_lines; i++){
+        std::cout << char(186);
+        for(int j = 0; j < line_length; j++) std::cout << ' ';
+        std::cout << char(186) << std:: endl;
+    }
+    std::cout << char(200);
+    for(int i = 0; i < line_length; i++)
+        std::cout << char(205);
+    std::cout << char(188);
+}
+
 std::pair<Node*, Node*> TextEditor::get_selection_start_end(){
     bool curr_after = false;
     Node* start = nullptr;
@@ -348,6 +381,7 @@ void TextEditor::run(){
         if(kbhit()){ // if a key has been touched
             keyboard_input(); // get keyboard input and act on it
             system("cls"); // clear screen
+            print_overlay(); // print the overlay
             print_text(); // print screen
             gotoxy(get_xy(curr)); // move cursor to curr
         }
