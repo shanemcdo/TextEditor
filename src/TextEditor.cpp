@@ -320,9 +320,6 @@ void TextEditor::run(){
             keyboard_input(); // get keyboard input and act on it
             system("cls"); // clear screen
             print_text(); // print screen
-            std::cout << std::endl;
-            for(Node* n = clipboard; n != nullptr; n = n->get_next())
-                std:: cout << n->get_val();
             gotoxy(get_xy()); // move cursor to curr
         }
     }
