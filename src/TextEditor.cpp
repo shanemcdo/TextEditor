@@ -225,6 +225,7 @@ void TextEditor::print_text(){ // prints the contents of the linked list
             std::cout << val; // print current character in list
         }
     }
+    set_color(7); //reset color back to normal
 }
 
 void TextEditor::delete_list(){ // deletes the linked list
