@@ -210,12 +210,12 @@ void TextEditor::print_text(){ // prints the contents of the linked list
     bool highlight = false;
     for(Node* n = head; n != nullptr; n = n->get_next()){ // loop through entire list starting with head
         char val = n->get_val();
-        if(selection != nullptr && (n == selection || n == curr)){
-            highlight = !highlight;
-        }
-        if(highlight) set_color(112);
-        else set_color(7);
-        if(selection == curr) highlight = false;
+        // if(selection != nullptr && (n == selection || n == curr)){
+        //     highlight = !highlight;
+        // }
+        // if(highlight) set_color(112);
+        // else set_color(7);
+        // if(selection == curr) highlight = false;
         std::cout << val; // print current character in list
     }
 }
@@ -284,6 +284,9 @@ void TextEditor::copy_selection(){
     if(curr_after){
         start = selection;
         end = curr_next;
+    }else{
+        start = curr_next;
+        end = selection;
     }
     if(end != nullptr) end = end->get_next();
     Node* n;
