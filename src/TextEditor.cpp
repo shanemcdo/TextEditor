@@ -94,7 +94,7 @@ void TextEditor::keyboard_input(){
         case 12: // ctrl l
             load_file(get_file_name()); // load file after asking for input
             break;
-        case 22: // ctrl v
+        case 16: // ctrl p
             paste_clipboard();
             break;
         case '\b': // backspace
@@ -259,6 +259,8 @@ void TextEditor::delete_character(){
 }
 
 void TextEditor::paste_clipboard(){
+    for(Node* n = clipboard; n != nullptr; n = n->get_next())
+        insert_character(n->get_val());
 }
 
 void TextEditor::delete_clipboard(){
@@ -317,10 +319,8 @@ void TextEditor::run(){
             system("cls"); // clear screen
             print_text(); // print screen
             std::cout << std::endl;
-            while(clipboard != nullptr){
-                std:: cout << clipboard->get_val();
-                clipboard = clipboard->get_next();
-            }
+            for(Node* n = clipboard; n != nullptr; n = n->get_next())
+                std:: cout << n->get_val();
             gotoxy(get_xy()); // move cursor to curr
         }
     }
