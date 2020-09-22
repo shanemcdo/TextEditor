@@ -5,8 +5,8 @@
 
 // private
 
-void TextEditor::set_color(int c){
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c);
+void TextEditor::set_color(int c){ // change the color of the text
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c); // set color
 }
 
 void TextEditor::gotoxy(COORD coord){ // send cursor to positon on the screen
@@ -36,7 +36,7 @@ COORD TextEditor::get_xy(Node* n, bool to_print = false){ // get position cursor
         if(!insert_at_begining && !to_print) // if not inserting at the beginning and not printing shift 1 to the right visually
             p.X++; // increment x
     }
-    p.Y += 4;
+    p.Y += 4; // add 4 to the y coordinate
     return p;
 }
 
@@ -49,32 +49,28 @@ void TextEditor::keyboard_input(){
             running = false; // stop the main loop
             break;
         case 24: // ctrl x
-            if(selection == nullptr){
-                selection = curr->get_next();
-            }else if(selection != nullptr){
-                copy_selection();
-                selection = nullptr;
+            if(selection == nullptr){ // if selection doesnt exists
+                selection = curr->get_next(); // set selection to the spot after current
+            }else{ // if selection exists
+                copy_selection(); // copy selection
+                selection = nullptr; // set selection equal to nullptr
             }
             break;
         case 0: // special key
         case 224: // special key
             switch(getch()){
-                case 141: // ctrl-up
                 case 72: //up
                     move_up();
                     break;
-                case 145: //ctrl-down
                 case 80: //down
                     move_down();
                     break;
-                case 115: //ctrl-left
                 case 75: //left
                     if(curr == head) // if at beginning
                         insert_at_begining = true; // insert at beginning is true
                     else if(curr->get_prev() != nullptr) // if there is a previous
                         curr = curr->get_prev(); // set current to previous
                     break;
-                case 116: // ctrl-right
                 case 77: //right
                     if(insert_at_begining) // if insert at beginning
                         insert_at_begining = false; // insert at beginning is false
@@ -208,23 +204,23 @@ void TextEditor::move_down(){ // move down one line but maintain x positon
 }
 
 void TextEditor::print_text(){ // prints the contents of the linked list
-    if(head == nullptr) return;
-    bool highlight = false;
-    bool start_new_line = true;
-    auto start_and_end = get_selection_start_end();
+    if(head == nullptr) return; // if head doesnt' exist return
+    bool highlight = false; // if the word should be highlighted
+    bool start_new_line = true; // if a new line should happen
+    auto start_and_end = get_selection_start_end(); // get the start and end of selection
     Node* start = start_and_end.first;
     Node* end = start_and_end.second;
     for(Node* n = head; n != nullptr; n = n->get_next()){ // loop through entire list starting with head
-        if(n == start) highlight = true;
-        if(highlight && selection != nullptr) set_color(112);
-        else set_color(7);
-        if(n == end) highlight = false;
-        char val = n->get_val();
-        if(val == '\n') start_new_line = true;
-        else{
-            if(start_new_line){
-                gotoxy(get_xy(n, true));
-                start_new_line = false;
+        if(n == start) highlight = true; // if found the start highlight is equal to true
+        if(highlight && selection != nullptr) set_color(112); // if highlight is on and there is a selction set color to highlight
+        else set_color(7); // else set color to normal
+        if(n == end) highlight = false; // if found the end highlight is equal to false
+        char val = n->get_val(); // get value
+        if(val == '\n') start_new_line = true; // if value is new line start a new line
+        else{ // not newline character
+            if(start_new_line){ // if start new line
+                gotoxy(get_xy(n, true)); // goto n
+                start_new_line = false; // dont start new line
             }
             std::cout << val; // print current character in list
         }
@@ -272,77 +268,76 @@ void TextEditor::delete_character(){
 }
 
 void TextEditor::paste_clipboard(){
-    for(Node* n = clipboard; n != nullptr; n = n->get_next())
-        insert_character(n->get_val());
+    for(Node* n = clipboard; n != nullptr; n = n->get_next())// cycle thru clipboard
+        insert_character(n->get_val()); // insert n
 }
 
 void TextEditor::delete_clipboard(){
-    while(clipboard != nullptr){
-        Node* node_to_delete = clipboard;
-        clipboard = clipboard->get_next();
-        delete node_to_delete;
+    while(clipboard != nullptr){ // cycle through clipboard
+        Node* node_to_delete = clipboard; // save node 
+        clipboard = clipboard->get_next(); // move to next node
+        delete node_to_delete; // delte node
     }
 }
 
 void TextEditor::copy_selection(){
-    delete_clipboard();
-    auto start_and_end = get_selection_start_end();
+    delete_clipboard(); // delete clipboard
+    auto start_and_end = get_selection_start_end(); // find start and end
     Node* start = start_and_end.first;
     Node* end = start_and_end.second;
-    if(end != nullptr) end = end->get_next();
+    if(end != nullptr) end = end->get_next(); // if end isnt nullptr move end one right
     Node* n;
     Node* tail;
-    while(start != end && start != nullptr){
-        if(clipboard == nullptr){
-            clipboard = new Node(start->get_val());
-            n = clipboard;
-            tail = clipboard;
-        }else{
-            tail = new Node(start->get_val());
-            n->insert(tail);
-            n = tail;
+    while(start != end && start != nullptr){ // move from start to end
+        if(clipboard == nullptr){ // if no head for clipboard
+            clipboard = new Node(start->get_val()); // create head
+            n = clipboard; // set n to head
+            tail = clipboard; // set tail to head
+        }else{ // head exists
+            tail = new Node(start->get_val()); // create new node
+            n->insert(tail); // append node to end
+            n = tail; // move n to end
         }
-        start = start->get_next();
+        start = start->get_next(); // move start one right
     }
 }
 
 void TextEditor::print_overlay(){
     int line_length = 90;
-    int number_of_lines = 30;
-    std::cout << char(201);
+    std::cout << char(201); // print top line
     for(int i = 0; i < line_length; i++)
         std::cout << char(205);
     std::cout << char(187) << std::endl;
-    std::cout << char(186);
-    std::cout << "Ctrl+w - Help menu | ";
+    std::cout << char(186); // print border
+    std::cout << "Ctrl+w - Help menu | "; // print help text
     std::cout << "Ctrl+s - Save file | ";
     std::cout << "Ctrl+l - load file | ";
     std::cout << "Ctrl+p - paste clipboard   ";
-    std::cout << char(186) << std:: endl << char(186);
-    std::cout << "Ctrl+q - quit | ";
+    std::cout << char(186) << std:: endl << char(186); // print border
+    std::cout << "Ctrl+q - quit | "; // print help text
     std::cout << "Ctrl+x - start selection / end selection and copy to clipboard            ";
-    std::cout << char(186) << std:: endl;
-    std::cout << char(200);
+    std::cout << char(186) << std:: endl; // print border
+    std::cout << char(200); // print bottom line
     for(int i = 0; i < line_length; i++)
         std::cout << char(205);
     std::cout << char(188) << std::endl;
 }
 
 std::pair<Node*, Node*> TextEditor::get_selection_start_end(){
-    bool curr_after = false;
+    bool curr_after = false; // if current is after selection
     Node* start = nullptr;
     Node* end = nullptr;
-    for(Node* n = selection; n != nullptr; n = n->get_next())
-        if(n == curr) curr_after = true;
-    Node* curr_next = curr->get_next();
-    if(curr_after){
-        start = selection;
-        end = curr_next;
-    }else{
-        start = curr_next;
-        end = selection;
+    for(Node* n = selection; n != nullptr; n = n->get_next()) // go from selction to end
+        if(n == curr) curr_after = true; // if n == current then current is after selection
+    Node* curr_next = curr->get_next(); // save node after current
+    if(curr_after){ // if current is after selection
+        start = selection; // start is selection
+        end = curr_next; // end is current next
+    }else{ // if selection is after current
+        start = curr_next; // start is current next
+        end = selection; // end is selection
     }
-    return std::make_pair(start, end);
+    return std::make_pair(start, end); // make it into pair
 }
 
 // public
@@ -359,7 +354,7 @@ TextEditor::TextEditor(){ // constructor
 
 TextEditor::~TextEditor(){ // deconstructor
     delete_list(); // destroy list
-    delete_clipboard();
+    delete_clipboard(); // destroy clipboard
 }
 
 void TextEditor::run(){
