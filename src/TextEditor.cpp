@@ -275,21 +275,30 @@ void TextEditor::delete_clipboard(){
 
 void TextEditor::copy_selection(){
     delete_clipboard();
+    bool curr_after = false;
+    Node* start = nullptr;
+    Node* end = nullptr;
+    for(Node* n = selection; n != nullptr; n = n->get_next())
+        if(n == curr) curr_after = true;
     Node* curr_next = curr->get_next();
-    if(curr_next != nullptr) curr_next = curr_next->get_next();
+    if(curr_after){
+        start = selection;
+        end = curr_next;
+    }
+    if(end != nullptr) end = end->get_next();
     Node* n;
     Node* tail;
-    while(selection != curr_next && selection != nullptr){
+    while(start != end && start != nullptr){
         if(clipboard == nullptr){
-            clipboard = new Node(selection->get_val());
+            clipboard = new Node(start->get_val());
             n = clipboard;
             tail = clipboard;
         }else{
-            tail = new Node(selection->get_val());
+            tail = new Node(start->get_val());
             n->insert(tail);
             n = tail;
         }
-        selection = selection->get_next();
+        start = start->get_next();
     }
 }
 
