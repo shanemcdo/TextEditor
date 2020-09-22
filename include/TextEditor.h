@@ -16,7 +16,7 @@ private:
     bool insert_at_begining; // if inserting before first character
     void set_color(int color);
     void gotoxy(COORD coord); // move cursor to (x, y) coord on screen
-    COORD get_xy(); // get coord of cursor based on curr
+    COORD get_xy(Node* n, bool to_print); // get coord of cursor based on curr
     void keyboard_input(); // take input from user
     void save_file(std::string file_name); // save a current document to a file
     void load_file(std::string file_name); // load document from a file

@@ -13,13 +13,13 @@ void TextEditor::gotoxy(COORD coord){ // send cursor to positon on the screen
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-COORD TextEditor::get_xy(){ // get position cursor should be at based on curr
+COORD TextEditor::get_xy(Node* n, bool to_print = false){ // get position cursor should be at based on n
     COORD p{-1, 0}; // create COORD p
-    if(curr == head && insert_at_begining) // at very beginning of file
+    if(n == head && insert_at_begining) // at very beginning of file
         p.X++; // increase p to {0, 0}
-    else if(curr != nullptr){
-        Node* curr_next = curr->get_next();
-        for(Node* n = head; n != curr_next; n = n->get_next()){ // loop through list and stop at curr's next
+    else if(n != nullptr){
+        Node* n_next = n->get_next();
+        for(Node* n = head; n != n_next; n = n->get_next()){ // loop through list and stop at n's next
             switch(n->get_val()){
                 case '\n': // newline character
                     p.X = -1; // reset x to zero
@@ -33,7 +33,7 @@ COORD TextEditor::get_xy(){ // get position cursor should be at based on curr
                     break;
             }
         }
-        if(!insert_at_begining) // if not inserting at the beginning shift 1 to the right visually
+        if(!insert_at_begining && !to_print) // if not inserting at the beginning shift 1 to the right visually
             p.X++; // increment x
     }
     return p;
@@ -50,7 +50,7 @@ void TextEditor::keyboard_input(){
         case 24: // ctrl x
             if(selection == nullptr){
                 selection = curr->get_next();
-            }else{
+            }else if(selection != nullptr){
                 copy_selection();
                 selection = nullptr;
             }
@@ -208,16 +208,24 @@ void TextEditor::move_down(){ // move down one line but maintain x positon
 
 void TextEditor::print_text(){ // prints the contents of the linked list
     bool highlight = false;
+    bool start_new_line = true;
     auto start_and_end = get_selection_start_end();
     Node* start = start_and_end.first;
     Node* end = start_and_end.second;
     for(Node* n = head; n != nullptr; n = n->get_next()){ // loop through entire list starting with head
-        char val = n->get_val();
         if(n == start) highlight = true;
         if(highlight && selection != nullptr) set_color(112);
         else set_color(7);
         if(n == end) highlight = false;
-        std::cout << val; // print current character in list
+        char val = n->get_val();
+        if(val == '\n') start_new_line = true;
+        else{
+            if(start_new_line){
+                gotoxy(get_xy(n, true));
+                start_new_line = false;
+            }
+            std::cout << val; // print current character in list
+        }
     }
 }
 
@@ -340,7 +348,7 @@ void TextEditor::run(){
             keyboard_input(); // get keyboard input and act on it
             system("cls"); // clear screen
             print_text(); // print screen
-            gotoxy(get_xy()); // move cursor to curr
+            gotoxy(get_xy(curr)); // move cursor to curr
         }
     }
 }
