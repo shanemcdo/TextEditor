@@ -208,14 +208,15 @@ void TextEditor::move_down(){ // move down one line but maintain x positon
 
 void TextEditor::print_text(){ // prints the contents of the linked list
     bool highlight = false;
+    auto start_and_end = get_selection_start_end();
+    Node* start = start_and_end.first;
+    Node* end = start_and_end.second;
     for(Node* n = head; n != nullptr; n = n->get_next()){ // loop through entire list starting with head
         char val = n->get_val();
-        // if(selection != nullptr && (n == selection || n == curr)){
-        //     highlight = !highlight;
-        // }
-        // if(highlight) set_color(112);
-        // else set_color(7);
-        // if(selection == curr) highlight = false;
+        if(n == start) highlight = true;
+        if(highlight && selection != nullptr) set_color(112);
+        else set_color(7);
+        if(n == end) highlight = false;
         std::cout << val; // print current character in list
     }
 }
