@@ -43,6 +43,14 @@ void TextEditor::keyboard_input(){
         case 17: // ctrl q
             running = false; // stop the main loop
             break;
+        case 24: // ctrl x
+            if(selection == nullptr){
+                selection = curr->get_next();
+            }else{
+                copy_selection();
+                selection = nullptr;
+            }
+            break;
         case 0: // special key
         case 224: // special key
             switch(getch()){
@@ -238,16 +246,34 @@ void TextEditor::delete_character(){
 }
 
 void TextEditor::paste_clipboard(){
-    HANDLE clip;
-    if(OpenClipboard(nullptr))
-        clip = GetClipboardData(CF_TEXT);
-    CloseClipboard();
-    // std::cout << clip;
-    // while(clip != nullptr){
-    //     insert_character(*clip);
-    //     clip++;
-    // }
-    std::cin.clear();
+}
+
+void TextEditor::delete_clipboard(){
+    while(clipboard != nullptr){
+        Node* node_to_delete = clipboard;
+        clipboard = clipboard->get_next();
+        delete node_to_delete;
+    }
+}
+
+void TextEditor::copy_selection(){
+    delete_clipboard();
+    Node* curr_next = curr->get_next();
+    if(curr_next != nullptr) curr_next = curr_next->get_next();
+    Node* n;
+    Node* tail;
+    while(selection != curr_next && selection != nullptr){
+        if(clipboard == nullptr){
+            clipboard = new Node(selection->get_val());
+            n = clipboard;
+            tail = clipboard;
+        }else{
+            tail = new Node(selection->get_val());
+            n->insert(tail);
+            n = tail;
+        }
+        selection = selection->get_next();
+    }
 }
 
 // public
@@ -258,11 +284,13 @@ TextEditor::TextEditor(){ // constructor
     selection = nullptr;
     clipboard = nullptr;
     running = false;
+    selection_size = 0;
     insert_at_begining = true;
 }
 
 TextEditor::~TextEditor(){ // deconstructor
     delete_list(); // destroy list
+    delete_clipboard();
 }
 
 void TextEditor::run(){
@@ -275,6 +303,11 @@ void TextEditor::run(){
             keyboard_input(); // get keyboard input and act on it
             system("cls"); // clear screen
             print_text(); // print screen
+            std::cout << std::endl;
+            while(clipboard != nullptr){
+                std:: cout << clipboard->get_val();
+                clipboard = clipboard->get_next();
+            }
             gotoxy(get_xy()); // move cursor to curr
         }
     }

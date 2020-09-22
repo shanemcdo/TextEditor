@@ -11,6 +11,7 @@ private:
     Node* curr; // pointing at where the cursor is
     Node* selection;
     Node* clipboard;
+    int selection_size;
     bool running; // if the main loop is running
     bool insert_at_begining; // if inserting before first character
     void gotoxy(COORD coord); // move cursor to (x, y) coord on screen
@@ -27,6 +28,8 @@ private:
     void insert_character(char key); // insert character at curr
     void delete_character(); // delete curr
     void paste_clipboard();
+    void delete_clipboard();
+    void copy_selection();
 public:
     TextEditor(); // constructor
     ~TextEditor(); // deconstructor
