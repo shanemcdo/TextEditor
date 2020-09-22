@@ -14,6 +14,7 @@ private:
     int selection_size;
     bool running; // if the main loop is running
     bool insert_at_begining; // if inserting before first character
+    void set_color(int color);
     void gotoxy(COORD coord); // move cursor to (x, y) coord on screen
     COORD get_xy(); // get coord of cursor based on curr
     void keyboard_input(); // take input from user

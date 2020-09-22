@@ -5,6 +5,10 @@
 
 // private
 
+void TextEditor::set_color(int c){
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c);
+}
+
 void TextEditor::gotoxy(COORD coord){ // send cursor to positon on the screen
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
@@ -201,8 +205,17 @@ void TextEditor::move_down(){ // move down one line but maintain x positon
 }
 
 void TextEditor::print_text(){ // prints the contents of the linked list
-    for(Node* n = head; n != nullptr; n = n->get_next()) // loop through entire list starting with head
-        std::cout << n->get_val(); // print current character in list
+    bool highlight = false;
+    for(Node* n = head; n != nullptr; n = n->get_next()){ // loop through entire list starting with head
+        char val = n->get_val();
+        if(selection != nullptr && (n == selection || n == curr)){
+            highlight = !highlight;
+        }
+        if(highlight) set_color(112);
+        else set_color(7);
+        if(selection == curr) highlight = false;
+        std::cout << val; // print current character in list
+    }
 }
 
 void TextEditor::delete_list(){ // deletes the linked list
