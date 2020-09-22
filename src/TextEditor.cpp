@@ -148,6 +148,8 @@ void TextEditor::show_help(){ // show help menu
     std::cout << "Ctrl+w - Help menu" << std::endl;
     std::cout << "Ctrl+s - Save file" << std::endl;
     std::cout << "Ctrl+l - load file" << std::endl;
+    std::cout << "Ctrl+x - start selection / end selection and copy to clipboard" << std::endl;
+    std::cout << "Ctrl+p - paste clipboard" << std::endl;
     std::cout << "Ctrl+q - quit" << std::endl;
     system("pause"); // pause screen
 }
