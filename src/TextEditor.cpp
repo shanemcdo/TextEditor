@@ -33,7 +33,7 @@ COORD TextEditor::get_xy(Node* n, bool to_print = false){ // get position cursor
                     break;
             }
         }
-        if(!insert_at_begining && !to_print) // if not inserting at the beginning shift 1 to the right visually
+        if(!insert_at_begining && !to_print) // if not inserting at the beginning and not printing shift 1 to the right visually
             p.X++; // increment x
     }
     return p;
@@ -207,6 +207,7 @@ void TextEditor::move_down(){ // move down one line but maintain x positon
 }
 
 void TextEditor::print_text(){ // prints the contents of the linked list
+    if(head == nullptr) return;
     bool highlight = false;
     bool start_new_line = true;
     auto start_and_end = get_selection_start_end();
@@ -256,7 +257,7 @@ void TextEditor::insert_character(char key){
 }
 
 void TextEditor::delete_character(){
-    if(curr != nullptr){ // if current is empty
+    if(curr != nullptr || head != nullptr){ // if current is empty
         Node* node_to_delete = curr; // copy address of current node
         curr = curr->get_prev(); // set current node to previous
         if(curr == nullptr){ // if the now current node is nullptr
