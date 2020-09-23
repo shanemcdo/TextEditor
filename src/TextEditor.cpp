@@ -49,7 +49,8 @@ void TextEditor::keyboard_input(){
             running = false; // stop the main loop
             break;
         case 24: // ctrl x
-            if(selection == nullptr && curr != nullptr){ // if selection doesnt exists
+            if(curr == nullptr) return; // if current doesnt exist exit the function
+            else if(selection == nullptr){ // if selection doesnt exists
                 selection = curr->get_next(); // set selection to the spot after current
             }else{ // if selection exists
                 copy_selection(); // copy selection
