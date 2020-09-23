@@ -326,6 +326,13 @@ void TextEditor::print_overlay(){
     std::cout << char(188) << std::endl;
 }
 
+void TextEditor::draw_screen(){ // clear screen, draw overlay, draw text, move cursor
+    system("cls"); // clear screen 
+    print_overlay(); // print the overlay
+    print_text(); // print screen
+    gotoxy(get_xy(curr)); // move cursor to curr
+}
+
 std::pair<Node*, Node*> TextEditor::get_selection_start_end(){
     bool curr_after = false; // if current is after selection
     Node* start = nullptr;
@@ -363,15 +370,12 @@ TextEditor::~TextEditor(){ // deconstructor
 void TextEditor::run(){
     system("cls"); // clear screen
     show_help(); // show help menu
-    system("cls"); // clear screen
+    draw_screen(); // clear screen, draw overlay, draw text and move cursor
     running = true; // start running
     while(running){ // main loop
         if(kbhit()){ // if a key has been touched
             keyboard_input(); // get keyboard input and act on it
-            system("cls");
-            print_overlay(); // print the overlay
-            print_text(); // print screen
-            gotoxy(get_xy(curr)); // move cursor to curr
+            draw_screen(); // clear screen, draw overlay and draw text
         }
     }
 }
