@@ -206,7 +206,7 @@ void TextEditor::move_down(){ // move down one line but maintain x positon
 }
 
 void TextEditor::print_text(){ // prints the contents of the linked list
-    if(head == nullptr) return; // if head doesnt' exist return
+    if(head == nullptr || curr == nullptr) return; // if head doesnt exist return
     bool highlight = false; // if the word should be highlighted
     bool start_new_line = true; // if a new line should happen
     auto start_and_end = get_selection_start_end(); // get the start and end of selection
