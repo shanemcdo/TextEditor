@@ -49,7 +49,7 @@ void TextEditor::keyboard_input(){
             running = false; // stop the main loop
             break;
         case 24: // ctrl x
-            if(selection == nullptr){ // if selection doesnt exists
+            if(selection == nullptr && curr != nullptr){ // if selection doesnt exists
                 selection = curr->get_next(); // set selection to the spot after current
             }else{ // if selection exists
                 copy_selection(); // copy selection
@@ -60,10 +60,12 @@ void TextEditor::keyboard_input(){
         case 224: // special key
             switch(getch()){
                 case 72: //up
-                    move_up();
+                    if(curr != nullptr)
+                        move_up();
                     break;
                 case 80: //down
-                    move_down();
+                    if(curr != nullptr)
+                        move_down();
                     break;
                 case 75: //left
                     if(curr == head) // if at beginning
