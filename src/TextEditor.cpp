@@ -308,23 +308,30 @@ void TextEditor::copy_selection(){
 
 void TextEditor::print_overlay(){
     int line_length = 90;
+    set_color(1); // set color blue
     std::cout << char(201); // print top line
     for(int i = 0; i < line_length; i++)
         std::cout << char(205);
     std::cout << char(187) << std::endl;
     std::cout << char(186); // print border
+    set_color(10); // set color green
     std::cout << "Ctrl+w - Help menu | "; // print help text
     std::cout << "Ctrl+s - Save file | ";
     std::cout << "Ctrl+l - load file | ";
     std::cout << "Ctrl+p - paste clipboard   ";
+    set_color(1); // set color blue
     std::cout << char(186) << std:: endl << char(186); // print border
+    set_color(10); // set color green
     std::cout << "Ctrl+q - quit | "; // print help text
     std::cout << "Ctrl+x - start selection / end selection and copy to clipboard            ";
+    set_color(1); // set color blue
     std::cout << char(186) << std:: endl; // print border
+    set_color(1); // set color blue
     std::cout << char(200); // print bottom line
     for(int i = 0; i < line_length; i++)
         std::cout << char(205);
     std::cout << char(188) << std::endl;
+    set_color(7); // set color white
 }
 
 void TextEditor::draw_screen(){ // clear screen, draw overlay, draw text, move cursor
