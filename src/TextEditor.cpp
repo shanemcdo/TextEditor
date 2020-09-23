@@ -51,7 +51,9 @@ void TextEditor::keyboard_input(){
         case 24: // ctrl x
             if(curr == nullptr) return; // if current doesnt exist exit the function
             else if(selection == nullptr){ // if selection doesnt exists
-                selection = curr->get_next(); // set selection to the spot after current
+                if(!insert_at_begining) // if at very top of file
+                    selection = curr->get_next(); // set selection to the spot after current
+                else selection = curr; // set selection at curr
             }else{ // if selection exists
                 copy_selection(); // copy selection
                 selection = nullptr; // set selection equal to nullptr
@@ -347,7 +349,10 @@ std::pair<Node*, Node*> TextEditor::get_selection_start_end(){
     Node* end = nullptr;
     for(Node* n = selection; n != nullptr; n = n->get_next()) // go from selction to end
         if(n == curr) curr_after = true; // if n == current then current is after selection
-    Node* curr_next = curr->get_next(); // save node after current
+    Node* curr_next;
+    if(!insert_at_begining) // cursor at very top left
+        curr_next = curr->get_next(); // save node after current
+    else curr_next = curr; // save current as node after current
     if(curr_after){ // if current is after selection
         start = selection; // start is selection
         end = curr_next; // end is current next
