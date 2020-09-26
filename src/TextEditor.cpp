@@ -141,7 +141,7 @@ void TextEditor::load_file(std::string file_name){ // loads text from a file
 std::string TextEditor::get_file_name(){ // get user input and return a string
     std::string file_name;
     system("cls"); // clear screen
-    std::cout << "Enter file name to save to: "; // output text
+    std::cout << "Enter file name: "; // output text
     std::cin >> file_name; // get input
     return file_name;
 }
