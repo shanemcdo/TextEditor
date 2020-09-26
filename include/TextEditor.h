@@ -9,12 +9,11 @@ class TextEditor{
 private:
     Node* head; // pointing at first character in the document
     Node* curr; // pointing at where the cursor is
-    Node* selection;
-    Node* clipboard;
-    int selection_size;
+    Node* selection; // pointer to where selection was started
+    Node* clipboard; // head of linked list containing contents of clipboard
     bool running; // if the main loop is running
     bool insert_at_begining; // if inserting before first character
-    void set_color(int color);
+    void set_color(int color); // set color of text output
     void gotoxy(COORD coord); // move cursor to (x, y) coord on screen
     COORD get_xy(Node* n, bool to_print); // get coord of cursor based on curr
     void keyboard_input(); // take input from user
@@ -31,8 +30,8 @@ private:
     void paste_clipboard(); // insert clipboard at curr
     void delete_clipboard(); // delete linked list for clipboard
     void copy_selection(); // copy selection into clipboard
-    void print_overlay();
-    void draw_screen();
+    void print_overlay(); // print the overlay for the screen
+    void draw_screen(); // print the entire screen overlay and all
     std::pair<Node*, Node*> get_selection_start_end();
 public:
     TextEditor(); // constructor

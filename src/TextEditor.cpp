@@ -371,7 +371,6 @@ TextEditor::TextEditor(){ // constructor
     selection = nullptr;
     clipboard = nullptr;
     running = false;
-    selection_size = 0;
     insert_at_begining = true;
 }
 
