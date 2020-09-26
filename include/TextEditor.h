@@ -28,9 +28,9 @@ private:
     void delete_list(); // delete the linked list containing document
     void insert_character(char key); // insert character at curr
     void delete_character(); // delete curr
-    void paste_clipboard();
-    void delete_clipboard();
-    void copy_selection();
+    void paste_clipboard(); // insert clipboard at curr
+    void delete_clipboard(); // delete linked list for clipboard
+    void copy_selection(); // copy selection into clipboard
     void print_overlay();
     void draw_screen();
     std::pair<Node*, Node*> get_selection_start_end();
