@@ -32,7 +32,7 @@ private:
     void copy_selection(); // copy selection into clipboard
     void print_overlay(); // print the overlay for the screen
     void draw_screen(); // print the entire screen overlay and all
-    std::pair<Node*, Node*> get_selection_start_end();
+    std::pair<Node*, Node*> get_selection_start_end(); // get the start and end points of the text currently selected
 public:
     TextEditor(); // constructor
     ~TextEditor(); // deconstructor
